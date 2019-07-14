@@ -10,12 +10,18 @@ import (
 // inner representation of elements must contain 100 elements for better and
 // easier counter calculation
 type RoundRobinString struct {
-	//cMutex   sync.Mutex
 	counter  uint32
 	elements []string
 }
 
-// TODO comments
+// StringElement contains info about element of the inner round robin queue
+type StringElement struct {
+	Percent int32
+	Value   string
+}
+
+// Load change inner state of RoundRobinString as indicated parameters and
+// reset inner counter
 func (rr *RoundRobinString) Load(elements []StringElement) error {
 	atomic.StoreUint32(&rr.counter, 0)
 	el, err := createHosts(elements)
@@ -26,21 +32,14 @@ func (rr *RoundRobinString) Load(elements []StringElement) error {
 	return nil
 }
 
-// TODO comments
+// Next return next query item value
 func (rr *RoundRobinString) Next() string {
 	c := atomic.AddUint32(&rr.counter, 1) % 100
 	return rr.elements[c]
 }
 
-// TODO comments
-type StringElement struct {
-	Percent int32
-	Value   string
-}
-
-// TODO разобрать где в стандартной либе лежат конструкторы - рядом с типом,
-// выше типа, или после методов типа
-// NewRoundRobin create initialized Wrr
+// NewRoundRobinString create initialized RoundRobinString and return pointer
+// to it, or error if parameters invalid
 func NewRoundRobinString(elements []StringElement) (*RoundRobinString, error) {
 	el, err := createHosts(elements)
 	if err != nil {
