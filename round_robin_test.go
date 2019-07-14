@@ -5,7 +5,7 @@ import (
 )
 
 func TestNewRoundRobin(t *testing.T) {
-	// errors while create
+	// error scenario
 	for _, tc := range []struct {
 		name string
 		in   []StringElement
@@ -23,7 +23,7 @@ func TestNewRoundRobin(t *testing.T) {
 		})
 	}
 
-	// positive scenario with truly weights
+	// positive scenario
 	for _, tc := range []struct {
 		name string
 		in   []StringElement
@@ -57,6 +57,6 @@ func assertNoError(t *testing.T, err error) {
 
 func assertMustError(t *testing.T, err error) {
 	if err == nil {
-		t.Errorf("unexpected error: %s", err.Error())
+		t.Error("must be error, but isn't")
 	}
 }
