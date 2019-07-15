@@ -1,3 +1,4 @@
+// Package rr contains multiple implementations of round robin
 package rr
 
 import (
@@ -78,6 +79,7 @@ func checkPercents(elements []StringElement) error {
 	return nil
 }
 
+// list of possible errors
 var (
 	ErrWrongPercents = errors.New("summary of percentages not equal 100")
 )

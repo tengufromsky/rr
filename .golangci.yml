@@ -1,26 +1,41 @@
 linters:
   enable:
-    - megacheck
+    - golint
     - govet
+    - megacheck
     - gocritic
+    - gocyclo
+    - unparam
+    - lll
+    - nakedret
+    - goimports
   enable-all: false
   disable:
     - scopelint
     - maligned
     - prealloc
   disable-all: false
-  presets:
-    - bugs
-    - unused
   fast: false
+
+linters-settings:
+  golint:
+    min-confidence: 0
+  govet:
+    check-shadowing: true
+  dupl:
+    threshold: 100
+  goconst:
+    min-len:         2
+    min-occurrences: 2
+  unparam:
+    check-exported: true
+
 
 # output configuration options
 output:
-  # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
   format: colored-line-number
-
-  # print lines of code with issue, default is true
   print-issued-lines: true
-
-  # print linter name in the end of issue text, default is true
   print-linter-name: true
+
+issues:
+  exclude-use-default: false
